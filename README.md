@@ -47,24 +47,28 @@ How to run
 ---------------
 **Network Input**
 
-The input of a heterogeneous network consists of node features, node labels and edges between nodes in the HIN. The edges are preferred to saved as sparse adjacency matrixes, each adjacency matrix preserves one type of relationship. Here is an input example of aminer network:
+The input of a heterogeneous network consists of node features, node labels and edges between nodes in the HIN. The edges are preferred to saved as sparse adjacency matrixes, each adjacency matrix preserves one type of relationship. 
+
+【Importance】：the data format is a sparse matrix of type '<type 'numpy.float64'>‘ for all adjacency matrices and label matrices. And the data format is a dense matrix of type 'numpy.ndarray' for all node feature matrices. 
+
+Here is an input example of aminer network:
 ```python
-data = scipy.io.loadmat(Aminer.mat)
+data = scipy.io.loadmat("Aminer.mat")
 print(data.keys())  # ['__header__', '__version__', '__globals__', 'PvsF', 'AvsF', 'AvsC', 'PvsC', 'PvsA', 'AvsA', 'PvsP'], where '__header__', '__version__' and '__globals__' are automatic generated when save matfile with scipy.io.savemat.
 
 print(data["PvsF"].shape)  # PvsF matrix is the feature of paper nodes, the shape is [paper_number, paper_features_dimension]
 
 print(data["AvsF"].shape)  # AvsF matrix is the feature of author nodes, the shape is [author_number, author_features_dimension]
 
-print(data["PvsA"].shape)  # PvsA is the adjacency matrix with shape of [paper_number, author_number], which preserves the publishing relationship between the paper an the author.
+print(data["PvsA"].shape)  # PvsA (sparse matrix) is the adjacency matrix with shape of [paper_number, author_number], which preserves the publishing relationship between the paper an the author.
 
-print(data["PvsP"].shape)  # PvsP is the adjacency matrix with shape of [paper_number, paper_number], which preserves the citation relationship between papers.
+print(data["PvsP"].shape)  # PvsP (sparse matrix) is the adjacency matrix with shape of [paper_number, paper_number], which preserves the citation relationship between papers.
 
-print(data["AvsA"].shape)  # AvsA is the adjacency matrix with shape of [author_number, author_number], which preserves the collaboration relationship between authors.
+print(data["AvsA"].shape)  # AvsA (sparse matrix) is the adjacency matrix with shape of [author_number, author_number], which preserves the collaboration relationship between authors.
 
-print(data["AvsC"].shape)  # AvsC matrix saves the label information of authors. The shape is [author_number, class_number]. Here an author can be multi labeled.
+print(data["AvsC"].shape)  # AvsC (sparse) matrix saves the label information of authors. The shape is [author_number, class_number]. Here an author can be multi labeled.
 
-print(data["PvsC"].shape)  # PvsC matrix saves the label information of papers. The shape is [paper_number, class_number]. Here a paper is labeled as one class.
+print(data["PvsC"].shape)  # PvsC (sparse) matrix saves the label information of papers. The shape is [paper_number, class_number]. Here a paper is labeled as one class.
 ```
 
 
